@@ -1,3 +1,5 @@
+import { APP_FILTER } from '@nestjs/core';
+import { DuplicateRollExceptionFilter } from './filters/exception.filter';
 import { RulesService } from './services/rules/rules.service';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -11,11 +13,22 @@ import { RollsService } from './services/rolls/rolls.service';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
+      database: 'bowling',
+      username: 'root',
       entities: [Roll],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([Roll]),
   ],
   controllers: [AppController],
-  providers: [RulesService, ScoreService, RollsService],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: DuplicateRollExceptionFilter,
+    },
+    RulesService,
+    ScoreService,
+    RollsService,
+  ],
 })
 export class AppModule {}

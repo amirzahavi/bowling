@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 export const MAX_PINS = 10;
 
 @Entity()
+@Unique(['frame', 'rollInFrame'])
 export class Roll {
   @PrimaryGeneratedColumn()
   id: number;

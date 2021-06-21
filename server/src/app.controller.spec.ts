@@ -1,22 +1,38 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { RollDto } from './dtos/roll.dto';
+import { RollsService } from './services/rolls/rolls.service';
+import { ScoreService } from './services/score/score.service';
 
 describe.skip('AppController', () => {
   let appController: AppController;
+  const rollServiceSpy = { addRoll: jest.fn() };
+  const scoreServiceSpy = { calculate: jest.fn() };
 
   beforeEach(async () => {
+    jest.resetAllMocks();
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppService],
+      providers: [
+        { provide: RollsService, useValue: rollServiceSpy },
+        { provide: ScoreService, useValue: scoreServiceSpy },
+      ],
     }).compile();
 
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  describe('/roll', () => {
+    it('should add roll', async () => {
+      const roll = new RollDto();
+      await appController.addRoll(roll);
+      expect(rollServiceSpy.addRoll).toBeCalledWith(roll);
+    });
+
+    it('should calculate score', async () => {
+      const roll = new RollDto();
+      await appController.addRoll(roll);
+      expect(scoreServiceSpy.calculate).toBeCalled();
     });
   });
 });

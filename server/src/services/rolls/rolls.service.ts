@@ -15,7 +15,7 @@ export class RollsService {
 
   async addRoll(newRoll: RollDto): Promise<void> {
     const lastRoll = await this.getLastRoll();
-    const roll: Roll = {
+    const roll: Omit<Roll, 'id'> = {
       ...newRoll,
       spare: this.rulesService.isSpare(lastRoll, newRoll),
       strike: this.rulesService.isStrike(newRoll),
