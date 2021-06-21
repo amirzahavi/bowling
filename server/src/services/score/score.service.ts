@@ -19,12 +19,14 @@ export class ScoreService {
 
   async calculate(): Promise<RollWithScore[]> {
     this.rolls = await this.rollRepository.find();
-    this.rolls.forEach((current, index) => {
-      const calculatedRoll = this.calculateRoll(current, index);
-      if (calculatedRoll) {
-        this.scored.push(calculatedRoll);
+    for (let i = 0; i < this.rolls.length; i++) {
+      const calculatedRoll = this.calculateRoll(this.rolls[i], i);
+      if (!calculatedRoll) {
+        this.scored.push({ ...this.rolls[i] });
+        break;
       }
-    });
+      this.scored.push(calculatedRoll);
+    }
     return this.scored;
   }
 
@@ -36,14 +38,11 @@ export class ScoreService {
     if (roll.spare) {
       return this.calculateSpareRoll(roll, index);
     }
-    return this.calculateScore(roll, this.scored[index - 1]?.score ?? 0);
+    return this.calculateScore(roll, index);
   }
 
-  private calculateScore(
-    roll: Roll,
-    previousScore: number,
-    bonus = 0,
-  ): RollWithScore {
+  private calculateScore(roll: Roll, index: number, bonus = 0): RollWithScore {
+    const previousScore = this.scored[index - 1]?.score ?? 0;
     return {
       ...roll,
       score: roll.knockedPins + previousScore + bonus,
@@ -57,7 +56,7 @@ export class ScoreService {
     const next = this.rolls[index + 1];
     return this.calculateScore(
       roll,
-      this.scored[index - 1]?.score ?? 0,
+      index,
       next.knockedPins + next2.knockedPins,
     );
   }
@@ -66,10 +65,6 @@ export class ScoreService {
     const next = this.rolls[index + 1];
     if (!next) return null;
 
-    return this.calculateScore(
-      roll,
-      this.scored[index - 1]?.score ?? 0,
-      next.knockedPins,
-    );
+    return this.calculateScore(roll, index, next.knockedPins);
   }
 }
