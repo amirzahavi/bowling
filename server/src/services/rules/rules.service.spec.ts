@@ -38,6 +38,15 @@ describe('RulesService', () => {
 
       expect(rulesService.isStrike(roll)).toBeFalsy();
     });
+
+    it('should NOT detect strike, when second roll and score max pins and 10th frame', () => {
+      const roll = new RollDto();
+      roll.rollInFrame = 2;
+      roll.frame = 10;
+      roll.knockedPins = MAX_PINS;
+
+      expect(rulesService.isStrike(roll)).toBeFalsy();
+    });
   });
 
   describe('isSpare', () => {

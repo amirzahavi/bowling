@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Roll } from './models/roll';
 import { ScoreService } from './services/score/score.service';
+import { RollsService } from './services/rolls/rolls.service';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { ScoreService } from './services/score/score.service';
     }),
   ],
   controllers: [AppController],
-  providers: [RulesService, AppService, ScoreService],
+  providers: [RulesService, AppService, ScoreService, RollsService],
 })
 export class AppModule {}
