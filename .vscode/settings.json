@@ -1,5 +1,6 @@
 {
   "conventionalCommits.scopes": [
     "server"
-  ]
+  ],
+  "jest.jestCommandLine": "cd server && npm run test"
 }

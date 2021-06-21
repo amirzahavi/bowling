@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { RollDto } from '../../roll.dto';
+import { RollDto } from '../../dtos/roll.dto';
 import { MAX_PINS, Roll } from '../../models/roll';
 
 @Injectable()
@@ -14,6 +14,4 @@ export class RulesService {
       previousRoll.knockedPins + currentRole.knockedPins === MAX_PINS
     );
   }
-
-  // calculateScore()
 }

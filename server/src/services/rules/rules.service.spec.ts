@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RollDto } from '../../roll.dto';
+import { RollDto } from '../../dtos/roll.dto';
 import { MAX_PINS, Roll } from '../../models/roll';
 import { RulesService } from './rules.service';
 
