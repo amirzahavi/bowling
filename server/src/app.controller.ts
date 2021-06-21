@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import { DeleteResult } from 'typeorm';
 import { RollWithScoreDto } from './dtos/roll-with-score.dto';
 import { RollDto } from './dtos/roll.dto';
 import { RollsService } from './services/rolls/rolls.service';
@@ -15,5 +16,10 @@ export class AppController {
   async addRoll(@Body() roll: RollDto): Promise<RollWithScoreDto[]> {
     await this.rollService.addRoll(roll);
     return this.scoreService.calculate();
+  }
+
+  @Delete()
+  reset(): Promise<DeleteResult> {
+    return this.rollService.reset();
   }
 }

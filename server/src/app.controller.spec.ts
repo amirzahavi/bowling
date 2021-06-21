@@ -6,7 +6,7 @@ import { ScoreService } from './services/score/score.service';
 
 describe.skip('AppController', () => {
   let appController: AppController;
-  const rollServiceSpy = { addRoll: jest.fn() };
+  const rollServiceSpy = { addRoll: jest.fn(), reset: jest.fn() };
   const scoreServiceSpy = { calculate: jest.fn() };
 
   beforeEach(async () => {
@@ -33,6 +33,13 @@ describe.skip('AppController', () => {
       const roll = new RollDto();
       await appController.addRoll(roll);
       expect(scoreServiceSpy.calculate).toBeCalled();
+    });
+  });
+
+  describe('/ (DELETE)', () => {
+    it('should call reset on service', async () => {
+      await appController.reset();
+      expect(rollServiceSpy.reset).toBeCalled();
     });
   });
 });

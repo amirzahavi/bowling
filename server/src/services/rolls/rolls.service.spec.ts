@@ -7,9 +7,15 @@ import { RulesService } from '../rules/rules.service';
 
 describe('RollsService', () => {
   let service: RollsService;
+  const deleteExcSpy = jest.fn();
   const rollRepoStub = {
     find: jest.fn(),
     insert: jest.fn(),
+    createQueryBuilder: () => ({
+      delete: () => ({
+        execute: deleteExcSpy,
+      }),
+    }),
   };
 
   beforeEach(async () => {
@@ -28,6 +34,12 @@ describe('RollsService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should reset', async () => {
+    await service.reset();
+
+    expect(deleteExcSpy).toBeCalledTimes(1);
   });
 
   it('should not be a spare on first frame and first roll', async () => {

@@ -2,5 +2,8 @@
   "conventionalCommits.scopes": [
     "server"
   ],
-  "jest.jestCommandLine": "cd server && npm run test"
+  "jest.jestCommandLine": "cd server && npm run test",
+  "cSpell.words": [
+    "dtos"
+  ]
 }

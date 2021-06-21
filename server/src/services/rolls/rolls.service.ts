@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { RollDto } from '../../dtos/roll.dto';
 import { Roll } from '../../models/roll';
 import { RulesService } from '../rules/rules.service';
@@ -21,6 +21,10 @@ export class RollsService {
       strike: this.rulesService.isStrike(newRoll),
     };
     await this.rollRepository.insert(roll);
+  }
+
+  reset(): Promise<DeleteResult> {
+    return this.rollRepository.createQueryBuilder().delete().execute();
   }
 
   private async getLastRoll(): Promise<Roll> {
