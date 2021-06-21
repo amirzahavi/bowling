@@ -1,4 +1,4 @@
-version: "3.6"
+version: "3.8"
 
 services:
   mysql:
@@ -9,3 +9,11 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
       - MYSQL_DATABASE=bowling
 
+  web:
+    build: ./server
+    ports: 
+      - 3000:3000
+    volumes: 
+      - ./server:/usr/src/app
+    environment: 
+      - MYSQL_HOST=mysql

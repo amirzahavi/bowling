@@ -12,7 +12,7 @@ import { RollsService } from './services/rolls/rolls.service';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: process.env.MYSQL_HOST || 'localhost',
       database: 'bowling',
       username: 'root',
       entities: [Roll],
