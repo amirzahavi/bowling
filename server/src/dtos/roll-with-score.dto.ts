@@ -1,5 +1,5 @@
 import { RollDto } from './roll.dto';
 
-export class RollWithScore extends RollDto {
+export class RollWithScoreDto extends RollDto {
   score?: number;
 }

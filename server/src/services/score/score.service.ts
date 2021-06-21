@@ -1,13 +1,13 @@
 import { Injectable, Logger, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RollWithScore } from 'src/dtos/roll-with-score.dto';
+import { RollWithScoreDto } from 'src/dtos/roll-with-score.dto';
 import { Repository } from 'typeorm';
 import { Roll } from '../../models/roll';
 
 @Injectable({ scope: Scope.REQUEST })
 export class ScoreService {
   private rolls: Roll[];
-  private scored: RollWithScore[] = [];
+  private scored: RollWithScoreDto[] = [];
   private logger: Logger;
 
   constructor(
@@ -17,7 +17,7 @@ export class ScoreService {
     this.logger = new Logger(ScoreService.name);
   }
 
-  async calculate(): Promise<RollWithScore[]> {
+  async calculate(): Promise<RollWithScoreDto[]> {
     this.rolls = await this.rollRepository.find();
     for (let i = 0; i < this.rolls.length; i++) {
       const calculatedRoll = this.calculateRoll(this.rolls[i], i);
@@ -30,7 +30,7 @@ export class ScoreService {
     return this.scored;
   }
 
-  private calculateRoll(roll: Roll, index: number): RollWithScore | null {
+  private calculateRoll(roll: Roll, index: number): RollWithScoreDto | null {
     this.logger.log(`calculating roll: ${JSON.stringify(roll)}`);
     if (roll.strike) {
       return this.calculateStrikeRoll(roll, index);
@@ -41,7 +41,11 @@ export class ScoreService {
     return this.calculateScore(roll, index);
   }
 
-  private calculateScore(roll: Roll, index: number, bonus = 0): RollWithScore {
+  private calculateScore(
+    roll: Roll,
+    index: number,
+    bonus = 0,
+  ): RollWithScoreDto {
     const previousScore = this.scored[index - 1]?.score ?? 0;
     return {
       ...roll,
@@ -49,7 +53,7 @@ export class ScoreService {
     };
   }
 
-  private calculateStrikeRoll(roll: Roll, index: number): RollWithScore {
+  private calculateStrikeRoll(roll: Roll, index: number): RollWithScoreDto {
     const next2 = this.rolls[index + 2];
     if (!next2) return null;
 
@@ -61,7 +65,10 @@ export class ScoreService {
     );
   }
 
-  private calculateSpareRoll(roll: Roll, index: number): RollWithScore | null {
+  private calculateSpareRoll(
+    roll: Roll,
+    index: number,
+  ): RollWithScoreDto | null {
     const next = this.rolls[index + 1];
     if (!next) return null;
 
