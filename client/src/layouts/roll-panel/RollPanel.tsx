@@ -4,13 +4,15 @@ import { RollButton } from "../../components/RollButton";
 
 import './RollPanel.css';
 
-const MAX_PINS = 10;
+const DEFAULT_MAX_PINS = 10;
 
-export const RollPanel: FC = () => {
-  return <div className="rolls">    
-    {Array(MAX_PINS + 1).fill(0).map((_, index) => { 
-        return <Button>{index}</Button>
-    })}
+interface RollPanelProps {
+  maxPins?: number;
+}
+
+export const RollPanel: FC<RollPanelProps> = ({maxPins = DEFAULT_MAX_PINS}) => {
+  return <div className="rolls">
+    {Array(maxPins + 1).fill(0).map((_, index) => <Button key={index}>{index}</Button>)}
     <RollButton></RollButton>
   </div>
 }

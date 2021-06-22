@@ -8,5 +8,5 @@ interface ButtonProps {
 }
 
 export const Button: FC<ButtonProps> = ({bordered, children}) => {
-  return <button className={classNames('btn', {bordered})}>{children}</button>
+  return <button role="button" className={classNames('btn', {bordered})}>{children}</button>
 }
