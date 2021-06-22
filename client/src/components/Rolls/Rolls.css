@@ -1,0 +1,20 @@
+.frame_rolls {
+  flex: 1;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  
+  background-color: var(--secondary-clr-light);
+  color: var(--primary-clr-dark);
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.frame_rolls.disabled {
+  background-color: var(--primary-clr);
+}
+
+.frame_roll svg {
+  width: 2.4rem;
+  fill: currentColor;
+}

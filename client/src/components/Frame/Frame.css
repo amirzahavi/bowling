@@ -13,18 +13,6 @@
   color: var(--ternary-clr);
 }
 
-.frame_rolls {
-  flex: 1;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  
-  background-color: var(--secondary-clr-light);
-  color: var(--primary-clr-dark);
-  font-size: 2rem;
-  font-weight: bold;
-}
-
 .frame_score {
   font-size: 2rem;
   font-weight: bold;
@@ -32,9 +20,7 @@
   background-color: var(--primary-clr);
 }
 
-.frame.disabled .frame_rolls,
-.frame.frame.disabled .frame_score{
-  cursor: not-allowed;
+.frame.frame.disabled .frame_score{  
   background-color: var(--primary-clr-dark);
   color: var(--primary-clr-dark);
-}
+} 
