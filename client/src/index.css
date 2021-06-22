@@ -5,8 +5,11 @@
 }
 
 :root {
-  --primary-clr: #8cd8a5;
-  --primary-clr-dark: #1a4c2b;
+  --primary-clr: #81b29a;
+  --primary-clr-dark: #3d405b;
+  --secondary-clr: #e07a5f;
+  --secondary-clr-light: #f2cc8f;
+  --ternary-clr: #f4f1de;
   
   --columns: 3;
   --gap: 0.5rem;
