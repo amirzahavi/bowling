@@ -1,0 +1,5 @@
+.seperator {
+  width: 100%;
+  height: var(--seperator-height, 3px);
+  background-color: teal;
+}

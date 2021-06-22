@@ -1,13 +1,19 @@
 import React from 'react';
 import './App.css';
+import { Seperator } from './components/Seperator';
 
 import {RollPanel} from './layouts/roll-panel';
+import { ScorePanel } from './layouts/score-panel';
 
 interface AppProps {}
 
 function App({}: AppProps) {
   return (
-    <RollPanel></RollPanel>
+    <div className="bowling">
+      <RollPanel></RollPanel>
+      <Seperator></Seperator>  
+      <ScorePanel></ScorePanel>
+    </div>
   );
 }
 

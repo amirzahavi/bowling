@@ -1,0 +1,8 @@
+.scores {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 1fr);
+  gap: var(--gap);
+
+  height: calc(60vh - var(--seperator-height));
+  padding: var(--gap);
+}

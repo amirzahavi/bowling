@@ -1,8 +1,8 @@
 .rolls {  
   display: grid;
-  grid-template-columns: repeat(var(--rolls-columns, 3), 1fr);    
-  gap: 0.5rem;
+  grid-template-columns: repeat(var(--columns), 1fr);    
+  gap: var(--gap);
 
-  height: 50vh;
-  padding: 0.5rem;
+  height: 40vh;
+  padding: var(--gap);;
 }
