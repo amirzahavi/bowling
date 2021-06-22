@@ -4,10 +4,10 @@ import { render } from '@testing-library/react';
 import { RollButton } from "./RollButton";
 
 describe('<RollButton>', () => {
-  it('should render bordered button', () => {
+  it('should render button', () => {
     const { getByRole } = render(<RollButton></RollButton>);    
     const btnElement = getByRole('button');
-    expect(btnElement).toHaveClass('btn bordered');
+    expect(btnElement).toHaveClass('btn');
   });
 
   it('should render button with svg', () => {

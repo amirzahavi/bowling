@@ -1,3 +1,14 @@
+.btn--roll {
+  color: var(--primary-clr);
+  background-color: inherit;
+  border: 3px solid var(--primary-clr);
+}
+
+.btn--roll:hover, .btn--roll:active, .btn--roll:focus {  
+  background-color: var(--primary-clr-dark);
+  border: none;
+}
+
 svg.submit {
   width: 2.4rem;
   height: 2.4rem;

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Button } from "../../components/button";
+import { Button } from "../../components/Button";
 import { RollButton } from "../../components/RollButton";
 
 import './RollPanel.css';

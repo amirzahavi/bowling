@@ -15,10 +15,4 @@ describe('<Button>', () => {
     const btnElement = getByRole('button');
     expect(btnElement).toHaveClass('btn')
   });
-
-  it('should render button with bordered class, when prop is set', () => {
-    const { getByRole } = render(<Button bordered>hello</Button>);
-    const btnElement = getByRole('button');
-    expect(btnElement).toHaveClass('btn bordered');
-  });
 });
