@@ -1,6 +1,7 @@
 {
   "conventionalCommits.scopes": [
-    "server"
+    "server",
+    "client"
   ],
   "jest.jestCommandLine": "cd server && npm run test",
   "cSpell.words": [

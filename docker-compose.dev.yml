@@ -19,3 +19,12 @@ services:
       - ./server:/usr/src/app
     environment: 
       - MYSQL_HOST=mysql
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    ports: 
+      - 8080:8080
+    volumes: 
+      - ./client:/usr/src/app    
