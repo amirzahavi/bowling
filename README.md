@@ -19,7 +19,9 @@ To separate the business logic and the view, i'm going with a client-server arch
 
 ### Back-end
 
-For the backend solution i will use an existing framework that have a flexible and structured solution using [NestJS](https://docs.nestjs.com/).
+For the backend solution i will use an existing framework [NestJS](https://docs.nestjs.com/), Nest have a flexible and structured solution and built in support for Typescript.
 
-The main problem of this game is to calculate the score based on previous rolls, for that use-case we need to keep track of all rolls to be able to calculate the final score (or in cas of a spare/strike).
-The problem fits nicely into an existing pattern called "Event Sourcing", where we save the events (in our case the roll) and not the current state (The calculated score), so on each event (roll) we can "play" all the events with the new event and calculate on the fly the current score.
+The main problem of this game is to calculate the score based on previous rolls, for that use-case we need to keep track of all rolls to be able to gradually calculate for each roll (with spare/strike use-cases) up until the final score.
+The problem fits nicely into an existing pattern called "Event Sourcing", where we save the events (in our case the roll) and not the current state (The calculated score), so on each event (roll) we can "play" all the events with the new event and calculate on the fly the current score for each roll.
+
+> For further back-end documentation please refer to [this link](./server/README.md)
