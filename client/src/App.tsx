@@ -3,7 +3,7 @@ import './App.css';
 import { Seperator } from './components/Seperator';
 
 import {RollPanel} from './layouts/roll-panel';
-import { ScorePanel } from './layouts/score-panel';
+import { FramesPanel } from './layouts/frames-panel';
 
 interface AppProps {}
 
@@ -12,7 +12,7 @@ function App({}: AppProps) {
     <div className="bowling">
       <RollPanel></RollPanel>
       <Seperator></Seperator>  
-      <ScorePanel></ScorePanel>
+      <FramesPanel></FramesPanel>
     </div>
   );
 }

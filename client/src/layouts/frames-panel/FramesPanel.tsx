@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Frame, FrameData } from "../../components/Frame";
 
-import "./ScorePanel.css";
+import "./FramesPanel.css";
 
 const frames = [
   {
@@ -22,11 +22,18 @@ const frames = [
     number: 3,
     spare: false,
     strike: false,
-    rolls: [3]    
+    rolls: [3, 2],
+    score: 22
+  },
+  {
+    number: 4,
+    spare: false,
+    strike: true,
+    rolls: [10]    
   }
 ]
 
-export const ScorePanel: FC = () => {
+export const FramesPanel: FC = () => {
   const allFrames = fillEmptyFrames(frames);
   return <div className="scores">
     {allFrames.map(f => <Frame key={f.number} data={f}></Frame>)}
