@@ -1,0 +1,17 @@
+.btn.bordered {
+  --btn-border: 2px solid var(--primary-clr-dark);
+}
+
+.btn {  
+  padding: 1rem;
+  font-weight: bold;
+  background-color: var(--primary-clr);
+  color: var(--primary-clr-dark);
+  border: var(--btn-border, none);
+  outline: none;
+}
+
+.btn:hover, .btn:active, .btn:focus {
+  background-color: var(--primary-clr-dark);
+  color: var(--primary-clr);
+}
