@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { Button } from "../../components/Button";
-import { RollButton } from "../../components/RollButton";
+import { Button } from "../Button";
+import { RollButton } from "../RollButton";
 
 import './RollPanel.css';
 

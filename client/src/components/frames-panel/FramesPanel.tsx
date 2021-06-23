@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Frame, FrameData } from "../../components/Frame";
+import { Frame, FrameData } from "../Frame";
 
 import "./FramesPanel.css";
 
