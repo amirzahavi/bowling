@@ -5,13 +5,13 @@ import { RollButton } from "./RollButton";
 
 describe('<RollButton>', () => {
   it('should render button', () => {
-    const { getByRole } = render(<RollButton></RollButton>);    
+    const { getByRole } = render(<RollButton disabled={false}></RollButton>);    
     const btnElement = getByRole('button');
     expect(btnElement).toHaveClass('btn');
   });
 
   it('should render button with svg', () => {
-    const { getByRole } = render(<RollButton></RollButton>);    
+    const { getByRole } = render(<RollButton disabled={false}></RollButton>);    
     const btnElement = getByRole('button');
     const svgElement = getByRole('img');
     expect(btnElement).toContainElement(svgElement);

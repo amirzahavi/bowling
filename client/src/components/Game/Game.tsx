@@ -1,8 +1,7 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { useAlert } from "react-alert";
-import { aggregateRolls, isLastRoll, nextFrame, nextRoll } from "../../utilities/rolls.util";
+import { useFrames } from "../../hooks/use-frames.hook";
 
-import type { FrameData } from "../Frame";
 import { FramesPanel } from "../FramesPanel";
 import { RollPanel } from "../RollPanel";
 import { Seperator } from "../Seperator";
@@ -11,62 +10,12 @@ import './Game.css';
 
 export const Game: FC = () => {
   const alert = useAlert();
-  const [done, setDone] = useState(false);
   const [pins, setKnockedPins] = useState<{knockedPins: number} | null>(null);
-  const [frames, setFrames] = useState<FrameData[]>([]);
-  const [currentRoll, setCurrentRoll] = useState({
-    frame: 1,
-    rollInFrame: 1
-  });
+  const {lastFrame, frames, error} = useFrames(pins);
 
-  useEffect(() => {
-    if (pins !== null) {
-      alert.info('processing', {timeout: 2000});
-      fetch('http://localhost:3000/roll', {        
-        method: 'POST',
-        headers: {          
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({...currentRoll, knockedPins: pins.knockedPins})        
-      })      
-      .then(result => result.json())      
-      .then(result => {
-        if (result.statusCode && result.message) {
-          alert.error(result.message);
-        } else {
-          const frames = aggregateRolls(result);          
-          setFrames(frames);
-          
-          if (isLastRoll(result)) {
-            setDone(true);
-            alert.success('Congratulations! You finished the game', {
-              onClose: () => {
-                fetch('http://localhost:3000', {
-                  method: 'DELETE'                  
-                })
-                .then(result => {
-                  if (!result.ok) {
-                    alert.error(`Something went wrong!`);
-                    return;
-                  }
-                  setFrames([]);
-                  setDone(false);
-                })
-                .catch(error => alert.error(error.message))
-              }
-            });
-          } else {
-            setCurrentRoll({
-              frame: nextFrame(currentRoll.frame, currentRoll.rollInFrame, pins.knockedPins),
-              rollInFrame: nextRoll(currentRoll.frame, currentRoll.rollInFrame, pins.knockedPins)
-            });
-          }
-        }
-      })
-      .catch(error => alert.error(error.message));
-    }
-  }, [pins]);  
-
+  if (error) {
+    alert.error(error);
+  }
 
   function handleRoll(knockedPins: number) {
     setKnockedPins({knockedPins});
@@ -74,7 +23,7 @@ export const Game: FC = () => {
 
   return (
     <div className="bowling">
-      <RollPanel disabled={done} onRoll={handleRoll}></RollPanel>
+      <RollPanel disabled={lastFrame} onRoll={handleRoll}></RollPanel>
       <Seperator></Seperator>  
       <FramesPanel frames={frames}></FramesPanel>
     </div>
