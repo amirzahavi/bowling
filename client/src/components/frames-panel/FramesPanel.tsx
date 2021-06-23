@@ -1,7 +1,10 @@
 import React, { FC } from "react";
 import { Frame, FrameData } from "../Frame";
+import { padArray } from "../../utilities/array.util";
 
 import "./FramesPanel.css";
+
+export const MAX_FRAMES = 10;
 
 const frames = [
   {
@@ -53,38 +56,32 @@ const frames = [
     rolls: [10],
     score: 74
   },
-  {
-    number: 8,
-    spare: false,
-    strike: false,
-    rolls: [2, 2],
-    score: 78
-  },
-  {
-    number: 9,
-    spare: true,
-    strike: false,
-    rolls: [4, 6],
-    score: 98
-  },
-  {
-    number: 10,
-    spare: false,
-    strike: true,
-    rolls: [5,5,6],
-    score: 114
-  }
+  // {
+  //   number: 8,
+  //   spare: false,
+  //   strike: false,
+  //   rolls: [2, 2],
+  //   score: 78
+  // },
+  // {
+  //   number: 9,
+  //   spare: true,
+  //   strike: false,
+  //   rolls: [4, 6],
+  //   score: 98
+  // },
+  // {
+  //   number: 10,
+  //   spare: false,
+  //   strike: true,
+  //   rolls: [5,5,6],
+  //   score: 114
+  // }
 ]
 
 export const FramesPanel: FC = () => {
-  const allFrames = fillEmptyFrames(frames);
+  const allFrames = padArray<FrameData>(frames, MAX_FRAMES, (index) => ({number: index + 1}));
   return <div className="scores">
     {allFrames.map(f => <Frame key={f.number} data={f}></Frame>)}
   </div>
-}
-
-function fillEmptyFrames(frames: FrameData[]): FrameData[] {
-  const numberOfFramesToFill = 10 - frames.length;
-  let frameNumberToContinue = frames.length + 1;
-  return [...frames, ...Array(numberOfFramesToFill).fill(0).map((() => ({number: frameNumberToContinue++})))]
 }

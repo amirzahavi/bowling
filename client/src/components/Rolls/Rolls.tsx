@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import React, { FC } from "react";
+import { joinElement } from "../../utilities/array.util";
 
 import './Rolls.css';
 
@@ -25,7 +26,7 @@ export const Rolls: FC<RollsProps> = ({rolls, strike, spare}) => {
   return (
     <div role="list" className={classNames("frame_rolls", {'disabled': !rolls?.length})}>
       { 
-        rolls ? rolls.map(renderRollMark(spare, strike)).reduce(joinSeperatorBetweenRolls, null) : null
+        rolls ? joinElement(rolls.map(renderRollMark(spare, strike)), index => <span key={index + 10}>•</span>) : null
       }
     </div>
   );
@@ -36,8 +37,4 @@ function renderRollMark(spare: boolean, strike: boolean) {
     if (strike && index === 0) return <Strike key={index}></Strike>;
     return index === 1 && spare ? <Spare key={index}></Spare> : <Roll key={index}>{roll}</Roll>
   }
-}
-
-function joinSeperatorBetweenRolls(rolls: JSX.Element[] | null, roll: JSX.Element, index: number): JSX.Element[] {
-  return rolls === null ? [roll] : [...rolls, <span key={index + 10}>•</span>, roll];
 }
