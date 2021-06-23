@@ -2,6 +2,10 @@ import React, { FC } from 'react';
 
 import './Button.css';
 
-export const Button: FC = ({children}) => {
-  return <button role="button" className="btn">{children}</button>
+interface ButtonProps {
+  onClick: () => void;
+}
+
+export const Button: FC<ButtonProps> = ({children, onClick}) => {
+  return <button role="button" className="btn" onClick={onClick}>{children}</button>
 }
