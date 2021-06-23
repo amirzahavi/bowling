@@ -11,6 +11,7 @@ import './Game.css';
 
 export const Game: FC = () => {
   const alert = useAlert();
+  const [done, setDone] = useState(false);
   const [pins, setKnockedPins] = useState<{knockedPins: number} | null>(null);
   const [frames, setFrames] = useState<FrameData[]>([]);
   const [currentRoll, setCurrentRoll] = useState({
@@ -37,7 +38,23 @@ export const Game: FC = () => {
           setFrames(frames);
           
           if (isLastRoll(result)) {
-            alert.success('Congratulations! You finished the game');
+            setDone(true);
+            alert.success('Congratulations! You finished the game', {
+              onClose: () => {
+                fetch('http://localhost:3000', {
+                  method: 'DELETE'                  
+                })
+                .then(result => {
+                  if (!result.ok) {
+                    alert.error(`Something went wrong!`);
+                    return;
+                  }
+                  setFrames([]);
+                  setDone(false);
+                })
+                .catch(error => alert.error(error.message))
+              }
+            });
           } else {
             setCurrentRoll({
               frame: nextFrame(currentRoll.frame, currentRoll.rollInFrame, pins.knockedPins),
@@ -57,7 +74,7 @@ export const Game: FC = () => {
 
   return (
     <div className="bowling">
-      <RollPanel onRoll={handleRoll}></RollPanel>
+      <RollPanel disabled={done} onRoll={handleRoll}></RollPanel>
       <Seperator></Seperator>  
       <FramesPanel frames={frames}></FramesPanel>
     </div>

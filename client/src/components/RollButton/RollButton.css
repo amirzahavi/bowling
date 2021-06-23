@@ -4,7 +4,14 @@
   border: 3px solid var(--primary-clr);
 }
 
-.btn--roll:hover, .btn--roll:active, .btn--roll:focus {  
+.btn--roll:disabled {
+  pointer-events: none;
+  color: var(--ternary-clr);
+  background-color: lightgray;
+  border: none;
+}
+
+.btn--roll:hover, .btn--roll:active {  
   background-color: var(--primary-clr-dark);
   border: none;
 }
