@@ -37,3 +37,11 @@ export function nextRoll(currentFrame: number, currentRoll: number, knockedPins:
   if (knockedPins === 10) return 1;
   return currentRoll === 1 ? currentRoll + 1 : 1;
 }
+
+export function isLastRoll(rolls: RollData[]): boolean {
+  const lastFrame = rolls.filter(roll => roll.frame === MAX_FRAMES);
+  if (!lastFrame.length || lastFrame.length === 1) return false;  
+  if (lastFrame.length > 2) return true;
+
+  return !lastFrame[0].strike && !lastFrame[1].spare;
+}

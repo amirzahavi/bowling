@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
-import { aggregateRolls, nextFrame, nextRoll } from "../../utilities/rolls.util";
+import { aggregateRolls, isLastRoll, nextFrame, nextRoll } from "../../utilities/rolls.util";
 
 import type { FrameData } from "../Frame";
 import { FramesPanel } from "../FramesPanel";
@@ -33,18 +33,22 @@ export const Game: FC = () => {
         if (result.statusCode && result.message) {
           alert.error(result.message);
         } else {
-          const frames = aggregateRolls(result);
-          console.log(frames);
+          const frames = aggregateRolls(result);          
           setFrames(frames);
-          setCurrentRoll({
-            frame: nextFrame(currentRoll.frame, currentRoll.rollInFrame, pins.knockedPins),
-            rollInFrame: nextRoll(currentRoll.frame, currentRoll.rollInFrame, pins.knockedPins)
-          });
+          
+          if (isLastRoll(result)) {
+            alert.success('Congratulations! You finished the game');
+          } else {
+            setCurrentRoll({
+              frame: nextFrame(currentRoll.frame, currentRoll.rollInFrame, pins.knockedPins),
+              rollInFrame: nextRoll(currentRoll.frame, currentRoll.rollInFrame, pins.knockedPins)
+            });
+          }
         }
       })
       .catch(error => alert.error(error.message));
     }
-  }, [pins])
+  }, [pins]);  
 
 
   function handleRoll(knockedPins: number) {
