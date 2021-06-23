@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAlert } from "react-alert";
+import { postRoll, resetGame } from "../utilities/api.util";
 import type { FrameData } from "../components/Frame";
 import { aggregateRolls, isLastRoll, nextFrame, nextRoll } from "../utilities/rolls.util";
 
@@ -20,16 +21,9 @@ export function useFrames(pins: PinsState | null) {
   useEffect(() => {
     if (pins !== null) {
       alert.info('processing', {timeout: 2000});
-      fetch('http://localhost:3000/roll', {        
-        method: 'POST',
-        headers: {          
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({...currentRoll, knockedPins: pins.knockedPins})        
-      })      
-      .then(result => result.json())      
+      postRoll({...currentRoll, knockedPins: pins.knockedPins})      
       .then(result => {
-        if (result.statusCode && result.message) {
+        if ('message' in result) {
           setError(result.message);
         } else {
           const frames = aggregateRolls(result);          
@@ -39,18 +33,10 @@ export function useFrames(pins: PinsState | null) {
             setLastFrame(true);
             alert.success('Congratulations! You finished the game', {
               onClose: () => {
-                fetch('http://localhost:3000', {
-                  method: 'DELETE'                  
-                })
-                .then(result => {
-                  if (!result.ok) {
-                    alert.error(`Something went wrong!`);
-                    return;
-                  }
+                resetGame().then(() => {                  
                   setFrames([]);
                   setLastFrame(false);                  
-                })
-                .catch(error => alert.error(error.message))
+                }).catch(error => alert.error(error.message))
               }
             });
           } else {

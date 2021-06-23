@@ -1,16 +1,8 @@
 import type { FrameData } from "src/components/Frame";
 import { MAX_FRAMES } from "../components/FramesPanel";
+import type { RollResponse } from "./api.util";
 
-export interface RollData {
-  frame: number;
-  rollInFrame: number;
-  knockedPins: number;
-  strike: boolean;
-  spare: boolean;
-  score?: number;
-}
-
-export function aggregateRolls(rolls: RollData[]): FrameData[] {
+export function aggregateRolls(rolls: RollResponse[]): FrameData[] {
   return rolls.reduce((frames, roll) => {
     let frame = frames.find(f => f.number === roll.frame);
     if (!frame) {
@@ -38,7 +30,7 @@ export function nextRoll(currentFrame: number, currentRoll: number, knockedPins:
   return currentRoll === 1 ? currentRoll + 1 : 1;
 }
 
-export function isLastRoll(rolls: RollData[]): boolean {
+export function isLastRoll(rolls: RollResponse[]): boolean {
   const lastFrame = rolls.filter(roll => roll.frame === MAX_FRAMES);
   if (!lastFrame.length || lastFrame.length === 1) return false;  
   if (lastFrame.length > 2) return true;
