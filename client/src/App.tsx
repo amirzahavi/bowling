@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import { Seperator } from './components/Seperator';
 
-import {RollPanel} from './components/roll-panel';
-import { FramesPanel } from './components/frames-panel';
+import {RollPanel} from './components/RollPanel';
+import { FramesPanel } from './components/FramesPanel';
 
 interface AppProps {}
 
