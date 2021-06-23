@@ -21,11 +21,7 @@ export class ScoreService {
     this.rolls = await this.rollRepository.find();
     for (let i = 0; i < this.rolls.length; i++) {
       const calculatedRoll = this.calculateRoll(this.rolls[i], i);
-      if (!calculatedRoll) {
-        this.scored.push({ ...this.rolls[i] });
-        break;
-      }
-      this.scored.push(calculatedRoll);
+      this.scored.push(calculatedRoll ? calculatedRoll : { ...this.rolls[i] });
     }
     return this.scored;
   }

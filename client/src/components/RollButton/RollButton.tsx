@@ -3,10 +3,10 @@ import React, { FC } from 'react';
 import './RollButton.css';
 
 interface RollButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
-export const RollButton: FC<RollButtonProps> = ({onClick}) => {
+export const RollButton: FC<RollButtonProps> = ({onClick = () => {}}) => {
   return <button className="btn btn--roll" role="button" onClick={onClick}>
     <svg role="img" className="submit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <path d="M0 0h24v24H0V0z" fill="none"/>
