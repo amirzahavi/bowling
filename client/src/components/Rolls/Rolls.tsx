@@ -16,7 +16,7 @@ interface RollsProps {
 export const Rolls: FC<RollsProps> = ({rolls, strike, spare}) => {  
   return (
     <div role="list" className={classNames("frame_rolls", {'disabled': !rolls?.length})}>
-      { 
+      {         
         rolls ? joinElement(rolls.map(renderRollMark(spare, strike)), index => <RollSeperator key={index + 10}></RollSeperator>) : null
       }
     </div>

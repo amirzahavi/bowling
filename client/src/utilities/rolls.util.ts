@@ -11,8 +11,8 @@ export function aggregateRolls(rolls: RollResponse[]): FrameData[] {
     }
     frame.rolls?.push(roll.knockedPins);
     frame.score = roll.score;
-    frame.spare = roll.spare;
-    frame.strike = roll.strike;
+    frame.spare = frame.spare ? frame.spare : roll.spare;
+    frame.strike = frame.strike ? frame.strike : roll.strike;
 
     return frames;
   }, [] as FrameData[]);
