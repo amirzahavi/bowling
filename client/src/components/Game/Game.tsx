@@ -12,7 +12,7 @@ import './Game.css';
 export const Game: FC = () => {
   const alert = useAlert();
   const [pins, setKnockedPins] = useState<{knockedPins: number} | null>(null);
-  const {processing, error, isLastRoll, frames, reset} = useFrames(pins);  
+  const {processing, error, isLastRoll, frames, currentRoll, reset} = useFrames(pins);  
   
   useEffect(() => {
     if (processing) {
@@ -25,7 +25,10 @@ export const Game: FC = () => {
       alert.success('Congratulations! You finished the game', {
         onClose: () => {
           resetGame()
-            .then(() => reset())
+            .then(() => {
+              reset();
+              setKnockedPins(null);
+            })
             .catch(error => alert.error(error.message))
         }
       });
@@ -37,10 +40,10 @@ export const Game: FC = () => {
   }
 
   return (
-    <div className="bowling">
-      <RollPanel disabled={isLastRoll} onRoll={handleRoll}></RollPanel>
+    <div className="bowling">      
+      <RollPanel prevPins={pins?.knockedPins} currentRoll={currentRoll} disabled={isLastRoll} onRoll={handleRoll}></RollPanel>
       <Seperator></Seperator>  
-      <FramesPanel frames={frames}></FramesPanel>
+      <FramesPanel frames={frames}></FramesPanel>      
     </div>
   );
 }

@@ -7,14 +7,16 @@ export interface PinsState {
   knockedPins: number;
 }
 
+export interface CurrentRollState {
+  frame: number;
+  rollInFrame: number;
+}
+
 export interface FramesState {
   processing: boolean;
   isLastRoll: boolean;
   frames: FrameData[];
-  currentRoll: {
-    frame: number;
-    rollInFrame: number;
-  };
+  currentRoll: CurrentRollState;
   error?: string;  
 }
 
