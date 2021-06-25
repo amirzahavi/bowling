@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAlert } from "react-alert";
-import { postRoll, resetGame } from "../utilities/api.util";
+import { postRoll } from "../utilities/api.util";
 import type { FrameData } from "../components/Frame";
 import { aggregateRolls, isLastRoll, nextFrame, nextRoll } from "../utilities/rolls.util";
 
@@ -8,48 +7,64 @@ export interface PinsState {
   knockedPins: number;
 }
 
+export interface FramesState {
+  processing: boolean;
+  lastFrame: boolean;
+  frames: FrameData[];
+  currentRoll: {
+    frame: number;
+    rollInFrame: number;
+  };
+  error?: string;  
+}
+
+const INITIAL_STATE: FramesState = {
+  currentRoll: {frame: 1, rollInFrame: 1},
+  frames: [],
+  lastFrame: false,
+  processing: false,
+  error: undefined
+}
+
 export function useFrames(pins: PinsState | null) {
-  const alert = useAlert();
-  const [lastFrame, setLastFrame] = useState(false);
-  const [error, setError] = useState('');
-  const [frames, setFrames] = useState<FrameData[]>([]);
-  const [currentRoll, setCurrentRoll] = useState({
-    frame: 1,
-    rollInFrame: 1
-  });
+  const [state, setState] = useState<FramesState>(INITIAL_STATE);
+
+  function reset() {
+    setState(INITIAL_STATE);
+  }
 
   useEffect(() => {
     if (pins !== null) {
-      alert.info('processing', {timeout: 2000});
-      postRoll({...currentRoll, knockedPins: pins.knockedPins})      
+      setState({...state, processing: true});
+      postRoll({...state.currentRoll, knockedPins: pins.knockedPins})      
       .then(result => {
         if ('message' in result) {
-          setError(result.message);
+          setState({...state, error: result.message, processing: false});
         } else {
-          const frames = aggregateRolls(result);          
-          setFrames(frames);
+          const frames = aggregateRolls(result);
           
           if (isLastRoll(result)) {
-            setLastFrame(true);
-            alert.success('Congratulations! You finished the game', {
-              onClose: () => {
-                resetGame().then(() => {                  
-                  setFrames([]);
-                  setLastFrame(false);                  
-                }).catch(error => alert.error(error.message))
-              }
+            setState({
+              ...state,
+              frames, 
+              processing: false, 
+              lastFrame: true
             });
           } else {
-            setCurrentRoll({
-              frame: nextFrame(currentRoll.frame, currentRoll.rollInFrame, pins.knockedPins),
-              rollInFrame: nextRoll(currentRoll.frame, currentRoll.rollInFrame, pins.knockedPins)
-            });
+            setState({
+              ...state, 
+              frames, 
+              processing: false,
+              currentRoll: {
+                frame: nextFrame(state.currentRoll.frame, state.currentRoll.rollInFrame, pins.knockedPins),
+                rollInFrame: nextRoll(state.currentRoll.frame, state.currentRoll.rollInFrame, pins.knockedPins)
+            }})
           }
         }
       })
-      .catch(error => setError(error.message));
+      .catch(error => setState({...state, error: error.message, processing: false}));
     }
   }, [pins]);
 
-  return {lastFrame, frames, error};
+  return {...state, reset};
 }
