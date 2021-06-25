@@ -4,16 +4,9 @@
   border: 3px solid var(--primary-clr);
 }
 
-.btn--roll:disabled {
-  pointer-events: none;
-  color: var(--ternary-clr);
-  background-color: lightgray;
-  border: none;
-}
-
 .btn--roll:hover, .btn--roll:active {  
   background-color: var(--primary-clr-dark);
-  border: none;
+  border-color: var(--primary-clr-dark);
 }
 
 svg.submit {

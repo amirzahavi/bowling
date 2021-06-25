@@ -9,7 +9,7 @@ export interface PinsState {
 
 export interface FramesState {
   processing: boolean;
-  lastFrame: boolean;
+  isLastRoll: boolean;
   frames: FrameData[];
   currentRoll: {
     frame: number;
@@ -21,7 +21,7 @@ export interface FramesState {
 const INITIAL_STATE: FramesState = {
   currentRoll: {frame: 1, rollInFrame: 1},
   frames: [],
-  lastFrame: false,
+  isLastRoll: false,
   processing: false,
   error: undefined
 }
@@ -42,24 +42,15 @@ export function useFrames(pins: PinsState | null) {
           setState({...state, error: result.message, processing: false});
         } else {
           const frames = aggregateRolls(result);
-          
-          if (isLastRoll(result)) {
-            setState({
-              ...state,
-              frames, 
-              processing: false, 
-              lastFrame: true
-            });
-          } else {
             setState({
               ...state, 
               frames, 
+              isLastRoll: isLastRoll(result),
               processing: false,
               currentRoll: {
                 frame: nextFrame(state.currentRoll.frame, state.currentRoll.rollInFrame, pins.knockedPins),
                 rollInFrame: nextRoll(state.currentRoll.frame, state.currentRoll.rollInFrame, pins.knockedPins)
             }})
-          }
         }
       })
       .catch(error => setState({...state, error: error.message, processing: false}));
