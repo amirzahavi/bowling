@@ -3,8 +3,8 @@
     "server",
     "client"
   ],
-  "jest.jestCommandLine": "cd server && npm run test",
   "cSpell.words": [
     "dtos"
-  ]
+  ],
+  "jest.rootPath": "./client"
 }

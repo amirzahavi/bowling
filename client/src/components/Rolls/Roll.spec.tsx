@@ -1,4 +1,3 @@
-/// <reference types="@testing-library/jest-dom" />
 import * as React from 'react';
 import { render } from '@testing-library/react';
 import { Rolls } from "./Rolls";
@@ -53,4 +52,12 @@ describe('<Rolls>', () => {
     expect(roll2).toHaveTextContent('/');
     expect(roll3).toHaveTextContent(rolls[2].toString());
   });
+
+  it('should render a seperator between rolls', () => {
+    const rolls = [6,4,5];
+    const { getAllByRole } = render(<Rolls rolls={rolls} spare={false} strike={false}></Rolls>);
+    const separators = getAllByRole('separator');
+        
+    expect(separators).toHaveLength(2);
+  })
 });

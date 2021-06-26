@@ -12,7 +12,7 @@ import './Game.css';
 export const Game: FC = () => {
   const alert = useAlert();
   const [pins, setKnockedPins] = useState<{knockedPins: number} | null>(null);
-  const {processing, error, isLastRoll, frames, currentRoll, reset} = useFrames(pins);  
+  const {processing, error, isLastRoll, frames, currentRoll, reset} = useFrames(pins);
   
   useEffect(() => {
     if (processing) {

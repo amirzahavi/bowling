@@ -1,6 +1,5 @@
-/// <reference types="@testing-library/jest-dom" />
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { RollButton } from "./RollButton";
 
 describe('<RollButton>', () => {
@@ -15,5 +14,21 @@ describe('<RollButton>', () => {
     const btnElement = getByRole('button');
     const svgElement = getByRole('img');
     expect(btnElement).toContainElement(svgElement);
+  });
+
+  it('should render disabled button', () => {
+    const { getByRole } = render(<RollButton disabled={true}></RollButton>);
+    const btnElement = getByRole('button');
+    expect(btnElement).toHaveAttribute('disabled');
+  });
+
+  it('should fire onClick event, when clicked', () => {
+    const spy = jest.fn();
+    const { getByRole } = render(<RollButton disabled={true} onClick={spy}></RollButton>);
+    const btnElement = getByRole('button');
+    
+    fireEvent.click(btnElement);
+
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });

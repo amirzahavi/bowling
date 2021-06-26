@@ -12,7 +12,7 @@ interface FramesPanelProps {
 
 export const FramesPanel: FC<FramesPanelProps> = ({frames}) => {
   const allFrames = padArray<FrameData>(frames, MAX_FRAMES, (index) => ({number: index + 1}));
-  return <div className="scores">
+  return <div data-testid="frames" className="frames">
     {allFrames.map(f => <Frame key={f.number} data={f}></Frame>)}
   </div>
 }

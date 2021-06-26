@@ -44,15 +44,15 @@ export function useFrames(pins: PinsState | null) {
           setState({...state, error: result.message, processing: false});
         } else {
           const frames = aggregateRolls(result);
-            setState({
-              ...state, 
-              frames, 
-              isLastRoll: isLastRoll(result),
-              processing: false,
-              currentRoll: {
-                frame: nextFrame(state.currentRoll.frame, state.currentRoll.rollInFrame, pins.knockedPins),
-                rollInFrame: nextRoll(state.currentRoll.frame, state.currentRoll.rollInFrame, pins.knockedPins)
-            }})
+          setState({
+            ...state,
+            frames,
+            isLastRoll: isLastRoll(result),
+            processing: false,
+            currentRoll: {
+              frame: nextFrame(state.currentRoll.frame, state.currentRoll.rollInFrame, pins.knockedPins),
+              rollInFrame: nextRoll(state.currentRoll.frame, state.currentRoll.rollInFrame, pins.knockedPins)
+          }});
         }
       })
       .catch(error => setState({...state, error: error.message, processing: false}));

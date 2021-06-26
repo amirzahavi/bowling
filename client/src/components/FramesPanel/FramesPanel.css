@@ -1,4 +1,4 @@
-.scores {
+.frames {
   display: grid;
   grid-template-columns: repeat(var(--columns), 1fr);
   gap: var(--gap);
