@@ -4,7 +4,7 @@ import { Score } from "./Score";
 
 describe('<Score>', () => {
   it('should render score with default, when no score passed', () => {
-    const {getByRole} = render(<Score></Score>);
+    const {getByRole} = render(<Score value={null}></Score>);
     const scoreElement = getByRole('status');
 
     expect(scoreElement).toHaveTextContent('N/A');

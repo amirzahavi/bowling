@@ -6,8 +6,8 @@ import type { FrameData } from '../Frame/Frame';
 describe('<FramesPanel>', () => {
   it('should render all frame and total score', () => {
     const frames: FrameData[] = [
-      {number: 1},{number: 2},{number: 3},{number: 4},{number: 5},
-      {number: 6},{number: 7},{number: 8},{number: 9},{number: 10}
+      {number: 1, score: 3},{number: 2, score: 3},{number: 3, score: 3},{number: 4, score: 3},{number: 5, score: 3},
+      {number: 6, score: 3},{number: 7, score: 3},{number: 8, score: 3},{number: 9, score: 3},{number: 10, score: 3}
     ];
     const { getByTestId } = render(<FramesPanel frames={frames}></FramesPanel>);
     const scores = getByTestId('frames');
@@ -17,7 +17,9 @@ describe('<FramesPanel>', () => {
 
   it('should render all frame and total score, when not all frames exists', () => {
     const frames: FrameData[] = [
-      {number: 1},{number: 2},{number: 3},{number: 4},{number: 5}
+      {number: 1, score: null},{number: 2, score: null},
+      {number: 3, score: null},{number: 4, score: null},
+      {number: 5, score: null}
     ];
     const { getByTestId } = render(<FramesPanel frames={frames}></FramesPanel>);
     const scores = getByTestId('frames');

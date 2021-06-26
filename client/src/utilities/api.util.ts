@@ -7,7 +7,7 @@ interface RollRequest {
 export interface RollResponse extends RollRequest {
   strike: boolean;
   spare: boolean;
-  score?: number;
+  score: number;
 }
 
 interface ErrorResponse {

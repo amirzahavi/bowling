@@ -6,7 +6,7 @@ export function aggregateRolls(rolls: RollResponse[]): FrameData[] {
   return rolls.reduce((frames, roll) => {
     let frame = frames.find(f => f.number === roll.frame);
     if (!frame) {
-      frame = {number: roll.frame, rolls: []};
+      frame = {number: roll.frame, rolls: [], score: null};
       frames.push(frame);
     }
     frame.rolls?.push(roll.knockedPins);
