@@ -1,0 +1,19 @@
+.score {
+  background-color: var(--primary-clr-dark);
+  text-align: center;
+  color: var(--ternary-clr);
+}
+
+.score h3{
+  background-color: var(--secondary-clr);  
+}
+
+.score .total {
+  height: calc(100% - 2rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-size: 2rem;
+  font-weight: bold;
+}

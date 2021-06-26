@@ -9,7 +9,6 @@
 
 @media (min-width: 76.8rem) {
   .frames {    
-    height: auto;
-    min-height: 16rem;        
+    height: 16rem;
   }
 }
