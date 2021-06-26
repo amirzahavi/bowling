@@ -29,11 +29,10 @@ export const RollPanel: FC<RollPanelProps> = ({prevPins, disabled, currentRoll, 
   const [knockedPins, setKnockedPins] = useState<number | null>(0);
 
   function clearChoiceAfterRoll() {
-    onRoll && knockedPins && onRoll(knockedPins);
+    onRoll && knockedPins !== null && onRoll(knockedPins);
     setKnockedPins(null);
   }
-
-  console.log(knockedPins)
+  
   return <div data-testid="rolls" className="rolls">
     {Array(NUMBER_OF_PIN_BUTTONS).fill(0).map((_, index) => <Button key={index} disabled={isBtnDisabled(disabled, prevPins, index, currentRoll)} selected={index === knockedPins} onClick={() => setKnockedPins(index)}>{index}</Button>)}
     <RollButton disabled={disabled} onClick={clearChoiceAfterRoll}></RollButton>

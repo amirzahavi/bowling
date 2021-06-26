@@ -56,17 +56,6 @@ describe('<RollPanel>', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('should NOT fire onRoll event, when RollButton is clicked and no button selected', () => {
-    const roll: CurrentRollState = {frame: 5, rollInFrame: 1};
-    const spy = jest.fn();
-    const { getByTestId } = render(<RollPanel disabled={false} currentRoll={roll} onRoll={spy}></RollPanel>);
-    const rollButton = getByTestId('roll-btn');
-
-    fireEvent.click(rollButton);
-
-    expect(spy).not.toHaveBeenCalled();
-  });
-
   it('should disable all buttons, when panel is disabled', () => {
     const roll: CurrentRollState = {frame: 5, rollInFrame: 1};
     const { getAllByRole} = render(<RollPanel disabled={true} currentRoll={roll}></RollPanel>);
