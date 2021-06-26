@@ -128,6 +128,7 @@ describe('/roll (e2e)', () => {
             knockedPins: 7,
             spare: true,
             strike: false,
+            score: 10,
           },
         ]);
       });
@@ -195,6 +196,7 @@ describe('/roll (e2e)', () => {
             knockedPins: 10,
             spare: false,
             strike: true,
+            score: 10,
           },
         ]);
       });
@@ -290,6 +292,7 @@ describe('/roll (e2e)', () => {
             knockedPins: 8,
             spare: true,
             strike: false,
+            score: 30,
           },
         ]);
       });
