@@ -93,29 +93,6 @@ describe('ScoreService', () => {
     ]);
   });
 
-  it('should skip calculation based on spare roll without next roll', async () => {
-    const roll1 = new Roll();
-    roll1.knockedPins = 6;
-    const roll2 = new Roll();
-    roll2.knockedPins = 4;
-    roll2.spare = true;
-
-    rollRepoStub.find.mockResolvedValue([roll1, roll2]);
-
-    const result = await service.calculate();
-
-    expect(result).toStrictEqual([
-      {
-        knockedPins: 6,
-        score: 6,
-      },
-      {
-        knockedPins: 4,
-        spare: true,
-      },
-    ]);
-  });
-
   it('should calculate based on strike roll', async () => {
     const roll1 = new Roll();
     roll1.knockedPins = 10;
@@ -178,42 +155,6 @@ describe('ScoreService', () => {
       {
         knockedPins: 4,
         score: 34,
-      },
-    ]);
-  });
-
-  it('should skip calculation based on strike roll, with only one forward roll', async () => {
-    const roll1 = new Roll();
-    roll1.knockedPins = 10;
-    roll1.strike = true;
-    const roll2 = new Roll();
-    roll2.knockedPins = 4;
-
-    rollRepoStub.find.mockResolvedValue([roll1, roll2]);
-
-    const result = await service.calculate();
-
-    expect(result).toStrictEqual([
-      {
-        knockedPins: 10,
-        strike: true,
-      },
-    ]);
-  });
-
-  it('should skip calculation based on strike roll, with no forward roll', async () => {
-    const roll1 = new Roll();
-    roll1.knockedPins = 10;
-    roll1.strike = true;
-
-    rollRepoStub.find.mockResolvedValue([roll1]);
-
-    const result = await service.calculate();
-
-    expect(result).toStrictEqual([
-      {
-        knockedPins: 10,
-        strike: true,
       },
     ]);
   });

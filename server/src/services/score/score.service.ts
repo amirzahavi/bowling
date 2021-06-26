@@ -21,18 +21,18 @@ export class ScoreService {
     this.rolls = await this.rollRepository.find();
     for (let i = 0; i < this.rolls.length; i++) {
       const calculatedRoll = this.calculateRoll(this.rolls[i], i);
-      this.scored.push(calculatedRoll ? calculatedRoll : { ...this.rolls[i] });
+      this.scored.push(calculatedRoll);
     }
     return this.scored;
   }
 
-  private calculateRoll(roll: Roll, index: number): RollWithScoreDto | null {
+  private calculateRoll(roll: Roll, index: number): RollWithScoreDto {
     this.logger.log(`calculating roll: ${JSON.stringify(roll)}`);
     if (roll.strike) {
-      return this.calculateStrikeRoll(roll, index);
+      return this.calculateRollPlusTwo(roll, index);
     }
     if (roll.spare) {
-      return this.calculateSpareRoll(roll, index);
+      return this.calculateRollPlusOne(roll, index);
     }
     return this.calculateScore(roll, index);
   }
@@ -49,9 +49,9 @@ export class ScoreService {
     };
   }
 
-  private calculateStrikeRoll(roll: Roll, index: number): RollWithScoreDto {
+  private calculateRollPlusTwo(roll: Roll, index: number): RollWithScoreDto {
     const next2 = this.rolls[index + 2];
-    if (!next2) return null;
+    if (!next2) return this.calculateRollPlusOne(roll, index);
 
     const next = this.rolls[index + 1];
     return this.calculateScore(
@@ -61,13 +61,11 @@ export class ScoreService {
     );
   }
 
-  private calculateSpareRoll(
+  private calculateRollPlusOne(
     roll: Roll,
     index: number,
   ): RollWithScoreDto | null {
     const next = this.rolls[index + 1];
-    if (!next) return null;
-
-    return this.calculateScore(roll, index, next.knockedPins);
+    return this.calculateScore(roll, index, next?.knockedPins ?? 0);
   }
 }

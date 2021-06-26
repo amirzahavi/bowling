@@ -4,7 +4,7 @@ import { RollDto } from './dtos/roll.dto';
 import { RollsService } from './services/rolls/rolls.service';
 import { ScoreService } from './services/score/score.service';
 
-describe.skip('AppController', () => {
+describe('AppController', () => {
   let appController: AppController;
   const rollServiceSpy = { addRoll: jest.fn(), reset: jest.fn() };
   const scoreServiceSpy = { calculate: jest.fn() };
