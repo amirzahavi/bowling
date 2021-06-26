@@ -9,7 +9,7 @@ export interface FrameData {
   strike?: boolean;
   spare?: boolean;
   rolls?: number[];
-  score?: number;
+  score: number | null;
 }
 
 interface FrameProps {
@@ -23,6 +23,6 @@ export const Frame: FC<FrameProps> = ({data}) => {
       strike={data.strike ?? false} 
       spare={data.spare ?? false}
     ></Rolls>
-    <div role="status" className="frame_score">{data.score ?? 'N/A'}</div>
+    <div role="status" className="frame_score">{data.score ?? ''}</div>
   </div>
 }

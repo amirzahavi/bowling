@@ -25,7 +25,8 @@ describe('<Frame>', () => {
 
   it('should render frame as disabled, if no rolls', () => {
     const data: FrameData = {
-      number: 3
+      number: 3,
+      score: null
     };
     const { getAllByRole } = render(<Frame data={data}></Frame>);
     const frameElement = getAllByRole('listitem').find(item => item.classList.contains('frame'));
@@ -35,7 +36,8 @@ describe('<Frame>', () => {
 
   it('should render frame header as frame number', () => {
     const data: FrameData = {
-      number: 3
+      number: 3,
+      score: null
     };
     const { getByRole } = render(<Frame data={data}></Frame>);
     const frameTitleElement = getByRole('heading');
@@ -46,7 +48,8 @@ describe('<Frame>', () => {
   it('should render frame rolls', () => {
     const data: FrameData = {
       number: 3,
-      rolls: [1,3]
+      rolls: [1,3],
+      score: 4
     };
     const { getByRole } = render(<Frame data={data}></Frame>);
     const rolls = getByRole('list');    
@@ -65,13 +68,14 @@ describe('<Frame>', () => {
     expect(frameScoreElement).toHaveTextContent(data.score!.toString());
   });
 
-  it('should render default frame score, when no score provided', () => {
+  it('should render empty frame score, when no score provided', () => {
     const data: FrameData = {
-      number: 3
+      number: 3,
+      score: null
     };
     const { getByRole } = render(<Frame data={data}></Frame>);
     const frameScoreElement = getByRole('status');
     
-    expect(frameScoreElement).toHaveTextContent('N/A');
+    expect(frameScoreElement).toHaveTextContent('');
   });
 });

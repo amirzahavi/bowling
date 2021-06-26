@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import './Score.css';
 
 interface ScoreProps {
-  value?: number;
+  value: number | null;
 }
 
 export const Score: FC<ScoreProps> = ({value}) => (
