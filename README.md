@@ -25,3 +25,22 @@ The main problem of this game is to calculate the score based on previous rolls,
 The problem fits nicely into an existing pattern called "Event Sourcing", where we save the events (in our case the roll) and not the current state (The calculated score), so on each event (roll) we can "play" all the events with the new event and calculate on the fly the current score for each roll.
 
 > For further back-end documentation please refer to [this link](./server/README.md)
+
+### Front-end
+
+For the frontend i chose to go with react for a fast and simple application with snowpack as the build tool.
+For state management i chose to use simple react hooks (useState) and if i would stumble with more complex shared state i would choose [recoil](https://recoiljs.org/) as my backup state management library.
+
+> For further back-end documentation please refer to [this link](./client/README.md)
+
+## Usage
+
+visit <http://localhost:8080> after setting up the environment
+
+```bash
+# development mode
+docker-compose -f "docker-compose.dev.yml" up -d
+
+# production mode
+docker-compose up -d
+```
