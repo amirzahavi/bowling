@@ -8,6 +8,12 @@
   grid-column: span calc(var(--columns) - 1);
 }
 
+@media (min-width: 76.8rem) {
+  .frame:last-of-type {
+    grid-column: span 2;
+  }
+}
+
 .frame_number {
   background-color: var(--secondary-clr);
   color: var(--ternary-clr);

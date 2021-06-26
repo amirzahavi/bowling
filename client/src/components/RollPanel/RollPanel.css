@@ -6,3 +6,9 @@
   height: 40vh;
   padding: var(--gap);;
 }
+
+@media (min-width: 76.8rem) {
+  .rolls {
+    height: auto;
+  }
+}
