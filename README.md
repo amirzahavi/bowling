@@ -30,6 +30,7 @@ The problem fits nicely into an existing pattern called "Event Sourcing", where 
 
 For the frontend i chose to go with react for a fast and simple application with snowpack as the build tool.
 For state management i chose to use simple react hooks (useState) and if i would stumble with more complex shared state i would choose [recoil](https://recoiljs.org/) as my backup state management library.
+I also decided to go with mobile first UI development to fit the design to small screens and adjust later for desktop mode.
 
 > For further back-end documentation please refer to [this link](./client/README.md)
 
@@ -44,3 +45,9 @@ docker-compose -f "docker-compose.dev.yml" up -d
 # production mode
 docker-compose up -d
 ```
+
+## Known issues
+
+- last frame second roll can roll more than 10 in total (frontend bug)
+- server don't have a strong validation on rolls numbers (e.g - `{frame=2, rollInFrame=5}` )
+- on refresh page the roll state is reset, database needs to be cleaned (needs to add sessionStorage to keep current roll)
