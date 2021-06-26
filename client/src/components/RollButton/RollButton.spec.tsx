@@ -24,7 +24,7 @@ describe('<RollButton>', () => {
 
   it('should fire onClick event, when clicked', () => {
     const spy = jest.fn();
-    const { getByRole } = render(<RollButton disabled={true} onClick={spy}></RollButton>);
+    const { getByRole } = render(<RollButton disabled={false} onClick={spy}></RollButton>);
     const btnElement = getByRole('button');
     
     fireEvent.click(btnElement);
