@@ -29,7 +29,34 @@ describe('<RollPanel>', () => {
     expect(buttons[NUMBER_OF_PIN_BUTTONS]).not.toHaveTextContent(NUMBER_OF_PIN_BUTTONS.toString());
   });
 
-  it('should fire onRoll event, when RollButton is clicked', () => {
+  it('should fire onRoll event, when RollButton is clicked and # of knocked pins are selected', () => {
+    const roll: CurrentRollState = {frame: 5, rollInFrame: 1};
+    const spy = jest.fn();
+    const { getByTestId, getAllByRole } = render(<RollPanel disabled={false} currentRoll={roll} onRoll={spy}></RollPanel>);
+    const buttons = getAllByRole('button');
+    const rollButton = getByTestId('roll-btn');
+
+    fireEvent.click(buttons[1]);
+    fireEvent.click(rollButton);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should fire onRoll event only once, when RollButton is clicked and # of knocked pins are selected', () => {
+    const roll: CurrentRollState = {frame: 5, rollInFrame: 1};
+    const spy = jest.fn();
+    const { getByTestId, getAllByRole } = render(<RollPanel disabled={false} currentRoll={roll} onRoll={spy}></RollPanel>);
+    const buttons = getAllByRole('button');
+    const rollButton = getByTestId('roll-btn');
+
+    fireEvent.click(buttons[1]);
+    fireEvent.click(rollButton);
+    fireEvent.click(rollButton);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should NOT fire onRoll event, when RollButton is clicked and no button selected', () => {
     const roll: CurrentRollState = {frame: 5, rollInFrame: 1};
     const spy = jest.fn();
     const { getByTestId } = render(<RollPanel disabled={false} currentRoll={roll} onRoll={spy}></RollPanel>);
@@ -37,7 +64,7 @@ describe('<RollPanel>', () => {
 
     fireEvent.click(rollButton);
 
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).not.toHaveBeenCalled();
   });
 
   it('should disable all buttons, when panel is disabled', () => {

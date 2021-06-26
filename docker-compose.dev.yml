@@ -19,6 +19,8 @@ services:
       - ./server:/usr/src/app
     environment: 
       - MYSQL_HOST=mysql
+    depends_on: 
+      - mysql
 
   frontend:
     build:
