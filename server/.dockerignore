@@ -1,0 +1,15 @@
+# outputs
+dist
+node_modules
+
+# ignore files
+.gitignore
+.prettierrc
+.dockerignore
+
+# misc
+.eslintrc.js
+jest.config.js
+jest.setup.ts
+test
+src/**/*.spec.ts

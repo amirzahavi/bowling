@@ -1,0 +1,12 @@
+# outputs
+build
+node_modules
+
+# ignore files
+.gitignore
+.prettierrc
+
+# misc
+jest.config.js
+jest.setup.ts
+src/**/*.spec.tsx
